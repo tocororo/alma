@@ -1,0 +1,53 @@
+{#
+-*- coding: utf-8 -*-
+Copyright (C) 2022-2024 CERN.
+Copyright (C) 2024 KTH Royal Institute of Technology.
+
+Invenio App RDM is free software; you can redistribute it and/or modify it
+under the terms of the MIT License; see LICENSE file for more details.
+#}
+
+<div class="footer-bottom sub-footer">
+  <div class="ui container">
+    <div class="ui grid">
+
+      <div class="eight wide column left middle aligned">
+        
+        <div class="row" style="text-align: center;">
+          <p class="text-muted"><a target="_blank" href="http://www.upr.edu.cu/">Universidad de Pinar del Río "Hermanos
+              Saíz Montes de Oca".</a>
+        </div>
+        <div class="row" style="text-align: center;">
+          <a target="_blank" href="http://www.upr.edu.cu/">Centro de Recursos para el Aprendizaje y la Investigación</a>
+          Creado-2015 actualizado-2021
+          <a target="_blank" href="/feedback">Contáctenos</a>
+        </div>
+        <div class="row" style="text-align: center;">
+          <a href="/htmlmap"></a>
+          <h4><b>ISSN 2520-9086 </h4>
+        </div>
+        <div class=row style="text-align: center;">
+          <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/deed.es"><img src="/image/creativecommons.png"
+              alt="Creative Commons License" /></a> </b>
+        </div>
+      </div>
+      
+
+
+  <div class="eight wide column left middle aligned">
+    {%- block footer_bottom_left %}
+    {{ _("Powered by") }}
+    <a href="http://inveniosoftware.org/products/rdm">{{ _("InvenioRDM") }}</a>
+    {%- endblock footer_bottom_left %}
+  </div>
+  <div class="eight wide column right aligned">
+    {%- block footer_bottom_right %}
+    {%- if config.I18N_LANGUAGES %}
+    {% from "invenio_i18n/macros/language_selector.html" import language_selector_dropdown %}
+    {{ language_selector_dropdown() }}
+    {%- endif %}
+    {%- endblock footer_bottom_right %}
+  </div>
+</div>
+</div>
+</div>

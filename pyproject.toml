@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "alma-app"
+version = "0.1.0"
+description = ""
+authors = ["Rafael Martinez Estevez <malayibiri@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.12.5"
+invenio-app-rdm = {extras = ["opensearch2"], version = "~=12.0.0"}
+alma = {path = "./site", develop = true}
+uwsgi = ">=2.0"
+uwsgitop = ">=0.11"
+uwsgi-tools = ">=1.1.1"
+
+
+[tool.poetry.group.dev.dependencies]
+check-manifest = ">=0.25"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

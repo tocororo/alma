@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "alma-db",
+      "Group": "Servers",
+      "Host": "alma-db-1",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "alma",
+      "SSLMode": "prefer"
+    }
+  }
+}
