@@ -1,0 +1,36 @@
+- id: alternative-title
+  props:
+    datacite: AlternativeTitle
+  title:
+    en: Alternative title
+    sv: Alternativ titel
+    de: Alternativer Titel
+    cs: Alternativní název
+    es: Título alternativo
+- id: subtitle
+  props:
+    datacite: Subtitle
+  title:
+    en: Subtitle
+    sv: Undertitel
+    de: Untertitel
+    cs: Podtitul
+    es: Subtítulo
+- id: translated-title
+  props:
+    datacite: TranslatedTitle
+  title:
+    en: Translated title
+    sv: Översatt titel
+    de: Übersetzter Titel
+    cs: Přeložený název
+    es: Título traducido
+- id: other
+  props:
+    datacite: Other
+  title:
+    en: Other
+    sv: Övrig titel
+    de: Sonstiger Titel
+    cs: Jiný název
+    es: Otro

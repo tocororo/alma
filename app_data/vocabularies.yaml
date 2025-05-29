@@ -1,13 +1,54 @@
+creatorsroles:
+  pid-type: crr
+  data-file: vocabularies/roles.yaml
+contributorsroles:
+  pid-type: cor
+  data-file: vocabularies/roles.yaml
+affiliations:
+  pid-type: aff
+  data-file: vocabularies/affiliations_cuba_sceiba.yaml
+resourcetypes:
+  pid-type: rsrct
+  data-file: vocabularies/resource_types.yaml
+descriptiontypes:
+  pid-type: dty
+  data-file: vocabularies/description_types.yaml
+datetypes:
+  pid-type: dat
+  data-file: vocabularies/date_types.yaml
+names:
+  pid-type: names
+  data-file: vocabularies/names_orcid.yaml
+relationtypes:
+  pid-type: rlt
+  data-file: vocabularies/relation_types.yaml
+removalreasons:
+  pid-type: rem
+  data-file: vocabularies/removal_reasons.yaml
+titletypes:
+  pid-type: ttyp
+  data-file: vocabularies/title_types.yaml
+communitytypes:
+  pid-type: comtyp
+  data-file: vocabularies/community_types.yaml
+code:developmentStatus:
+  pid-type: ds
+  data-file: vocabularies/contrib/codemeta/development_status.yaml
+
 subjects:
   pid-type: sub
   schemes:
-    - id: FOS
-      name: Fields of Science and Technology
-      uri: "http://www.oecd.org/science/inno/38235147.pdf"
-      data-file: vocabularies/subjects_oecd_fos.yaml
+    # - id: FOS
+    #   name: Fields of Science and Technology
+    #   uri: "http://www.oecd.org/science/inno/38235147.pdf"
+    #   data-file: vocabularies/subjects_oecd_fos.yaml
+    - id: UNESCO
+      name: Unesco Subjects
+      uri: "http://vocabularies.unesco.org/thesaurus/"
+      data-file: vocabularies/unesco.yaml
 # Minimal example vocabularies
 # can be used for quick testing, or a basis for building your own customized vocabularies.
-#names:
+# names:
 #  pid-type: names
 #  data-file: vocabularies/names.yaml
 #licenses:
@@ -20,3 +61,16 @@ subjects:
 # affiliations:
 #   pid-type: aff
 #   data-file: vocabularies/affiliations_ror.yaml
+
+# affiliations:
+#   pid-type: aff
+#   schemes:
+#     - id: ROR
+#       name: Research Organization Registry
+#       uri: "https://ror.org/"
+#       data-file: vocabularies/affiliations_ror.yaml
+#     - id: Cuba
+#       name: Entidades Cubanas
+#       uri: "https://sceiba.cu/organizations/"
+#       data-file: vocabularies/affiliations_cuba_sceiba.yaml
+

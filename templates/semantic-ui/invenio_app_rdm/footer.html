@@ -11,64 +11,31 @@ under the terms of the MIT License; see LICENSE file for more details.
 {%- block footer_top %}
 
 <div class="footer-top">
-  <div class="ui container app-rdm-footer">
-    {%- block footer_top_left %}
-    <div class="ui grid app-rdm-footer">
-      <div class="rdm-footer five wide tablet two wide computer column">
-        <h2 class="ui small header">{{ _("Publicaciones Científicas UPR") }}</h2>
-        <p>
-          <a target="_blank" href="http://cfores.upr.edu.cu">{{ _("Cfores") }}</a>
-        </p>
-        <p>
-          <a target="_blank" href="http://coodes.upr.edu.cu">{{ _("Coodes") }}</a>
-        </p>
-        <p>
-          <a target="_blank" href="http://podium.upr.edu.cu">{{ _("Podium") }}</a>
-        </p>
-        <p>
-          <a target="_blank" href="http://mendive.upr.edu.cu">{{ _("Mendive") }}</a>
-        </p>
+  <div class="ui container grid app-rdm-footer">
 
+    <div class="row ui">
+      <div class="sixteen wide column center aligned">
+        <a target="_blank" href="http://crai.upr.edu.cu/">
+          <img src="/static/images/logocrai.png" alt="Centro de Recursos para el Aprendizaje y la Investigación"
+            style="width: 300px;">
+        </a>
       </div>
-      <div class="rdm-footer five wide tablet two wide computer column">
-        <h2 class="ui small header">{{ _("Centro de Recursos para el Aprendizaje y la Investigación") }}</h2>
+    </div>
+
+    <div class="row">
+      <div class="sixteen wide column center aligned">
+        <h3> <a target="_blank" href="http://www.upr.edu.cu/">
+            Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"</a></h3>
+
+        <h4><b>ISSN 2520-9086 </h4>
         <p>{{ _("Calle Martí 300 e/ González Alcorta y 27 de noviembre.") }}</p>
         <p>{{ _("CP: 20200") }}</p>
         <p>{{ _("Pinar del Rio, Cuba") }}</p>
         <p><span class="glyphicon glyphicon-phone-alt"></span>(+53) 48755032</p>
         <p><span class="glyphicon glyphicon-envelope"></span>biblioteca@upr.edu.cu</p>
       </div>
-
-      {%- endblock footer_top_left %}
-      <div class="six wide column right aligned">
-        {%- block footer_top_right %}
-
-      <div class="rdm-footer five wide tablet two wide computer column">
-        <h2 class="ui small header">{{ _("Otros sitios dónde se encuentran nuestros documentos") }}</h2>
-        <p>
-
-                            	
-          <a target="_blank" href="https://v2.sherpa.ac.uk/id/repository/3555"> OpenDOAR </a>
-        </p>	
-    
-         <p>
-          <a target="_blank" href="https://scholar.google.com/schhp?hl=es&as_sdt=0,5"> GoogleScholar </a>
-        </p>	
-         <p>
-          <a target="_blank" href="https://www.openaire.eu/">Openaire</a>
-        
-        </p>
-        <p>
-          <a target="_blank" href="http://road.issn.org/issn_search?afs:query=2520-9086&afs:ip=MONIP">ROAD</a>
-        
-        </p>
-         <p>
-          <a target="_blank" href="http://roar.eprints.org/cgi/roar_search/advanced?location_country=cu&software=dspace&type=&order=-recordcount%2F-date"> OpenROAR</a>
-        </p>
-      </div>
-        {%- endblock footer_top_right %}
-      </div>
     </div>
+
   </div>
 
 </div>

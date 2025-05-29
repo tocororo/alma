@@ -1,0 +1,54 @@
+- id: abstract
+  props:
+    datacite: Abstract
+  title:
+    en: Abstract
+    sv: Abstract
+    de: Abstract
+    cs: Abstrakt
+    es: Resumen
+- id: methods
+  props:
+    datacite: Methods
+  title:
+    en: Methods
+    sv: Metoder
+    de: Methoden
+    cs: Metody
+    es: Métodos
+- id: series-information
+  props:
+    datacite: SeriesInformation
+  title:
+    en: Series information
+    sv: Information om serien
+    de: Informationen zur Reihe
+    cs: Informace o sérii
+    es: Información de la serie
+- id: table-of-contents
+  props:
+    datacite: TableOfContents
+  title:
+    en: Table of contents
+    sv: Innehållsförteckning
+    de: Inhaltsverzeichnis
+    cs: Obsah
+    es: Tabla de contenido
+- id: technical-info
+  props:
+    datacite: TechnicalInfo
+  title:
+    en: Technical info
+    sv: Teknisk information
+    de: Technische Informationen
+    cs: Technické informace
+    es: Información técnica
+- id: other
+  props:
+    datacite: Other
+  title:
+    en: Other
+    sv: Övrig
+    de: Sonstige
+    cs: Jiné
+    es: Otro
