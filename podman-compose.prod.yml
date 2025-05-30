@@ -149,11 +149,8 @@ services:
         limits:
           cpus: '1'
           memory: 1G
-volumes:
-  :
-  :
-  :
-# Volume configuration with labels for backup identification
+
+
 volumes:
   static_data:
     driver: local
