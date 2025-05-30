@@ -1,0 +1,223 @@
+version: '2.2'
+
+# Define custom network for isolation
+networks:
+  alma_network:
+    driver: bridge
+    attachable: true
+    labels:
+      - description="Isolated network for Alma services"
+
+services:
+
+  cache:
+    extends:
+      file: docker-services.yml
+      service: cache
+    networks:
+      - alma_network
+    volumes:
+      - /alma/data/redis:/data  # Bind mount for critical data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+  db:
+    extends:
+      file: docker-services.yml
+      service: db
+    networks:
+      - alma_network
+    volumes:
+      - /alma/data/postgres:/var/lib/postgresql/data  # Bind mount for critical data
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+  mq:
+    extends:
+      file: docker-services.yml
+      service: mq
+    volumes:
+      - /srv/alma/rabbitmq:/var/lib/rabbitmq
+    networks:
+      - alma_network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 1G
+  search:
+    extends:
+      file: docker-services.yml
+      service: search
+    networks:
+      - alma_network
+    volumes:
+      - /alma/data/opensearch:/usr/share/opensearch/data  # Bind mount for critical data
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+  # Frontend
+  frontend:
+    extends:
+      file: docker-services.yml
+      service: frontend
+    image: localhost/alma-frontend-prod:1
+    networks:
+      - alma_network
+    volumes:
+      - /alma/data/static:/opt/invenio/var/instance/static
+    depends_on:
+      - web-ui
+      - web-api
+    ports:
+      - "80:80"
+      - "443:443"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+  # UI Application
+  web-ui:
+    extends:
+      file: docker-services.yml
+      service: app
+    command: ["uwsgi /opt/invenio/var/instance/uwsgi_ui.ini"]
+    image: localhost/alma-prod:1
+    networks:
+      - alma_network
+    ports:
+      - "5000"
+    volumes:
+      - /alma/data/static:/opt/invenio/var/instance/static
+      - /alma/data/uploaded:/opt/invenio/var/instance/data
+      - /alma/data/archived:/opt/invenio/var/instance/archive
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  # API Rest Application
+  web-api:
+    extends:
+      file: docker-services.yml
+      service: app
+    command: ["uwsgi /opt/invenio/var/instance/uwsgi_rest.ini"]
+    image: localhost/alma-prod:1
+    networks:
+      - alma_network
+    ports:
+      - "5000"
+    volumes:
+      - /alma/data/uploaded:/opt/invenio/var/instance/data
+      - /alma/data/archived:/opt/invenio/var/instance/archive
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  # Worker
+  worker:
+    extends:
+      file: docker-services.yml
+      service: app
+    command: ["celery -A invenio_app.celery worker --beat --loglevel=INFO"]
+    image: localhost/alma-prod:1
+    networks:
+      - alma_network
+    volumes:
+      - /alma/data/uploaded:/opt/invenio/var/instance/data
+    depends_on:
+      search:
+        condition: service_started
+      cache:
+        condition: service_started
+      db:
+        condition: service_started
+      mq:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+volumes:
+  :
+  :
+  :
+# Volume configuration with labels for backup identification
+volumes:
+  static_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /alma/data/static
+    labels:
+      - backup=true
+      - service=frontend
+  uploaded_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /alma/data/uploaded
+    labels:
+      - backup=true
+      - service=web-ui
+  archived_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /alma/data/archived
+    labels:
+      - backup=true
+      - service=redis
+  redis_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /alma/data/redis
+    labels:
+      - backup=true
+      - service=redis
+
+  pg_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /alma/data/postgres
+    labels:
+      - backup=true
+      - service=postgres
+
+  rabbitmq_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /srv/alma/rabbitmq
+    labels:
+      - backup=true
+      - service=rabbitmq
+
+  os_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /alma/data/opensearch
+    labels:
+      - backup=true
+      - service=opensearch

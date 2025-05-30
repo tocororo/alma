@@ -28,13 +28,13 @@ services:
       - "80"
       - "443"
   cache:
-    image: docker.uclv.cu/redis:7
+    image: quay.io/lib/redis:7
     restart: "unless-stopped"
     read_only: true
     ports:
       - "6379:6379"
   db:
-    image: docker.uclv.cu/postgres:14.13
+    image: quay.io/lib/postgres:14.13
     restart: "unless-stopped"
     environment:
       - "POSTGRES_USER=alma"
@@ -53,7 +53,7 @@ services:
     volumes:
       - ./docker/pgadmin/servers.json:/pgadmin4/servers.json
   mq:
-    image: docker.uclv.cu/rabbitmq:3-management
+    image: quay.io/lib/rabbitmq:3-management
     restart: "unless-stopped"
     ports:
       - "15672:15672"
