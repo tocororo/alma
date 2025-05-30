@@ -12,7 +12,7 @@ services:
 
   cache:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: cache
     networks:
       - alma_network
@@ -25,7 +25,7 @@ services:
           memory: 512M
   db:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: db
     networks:
       - alma_network
@@ -38,7 +38,7 @@ services:
           memory: 2G
   mq:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: mq
     volumes:
       - /srv/alma/rabbitmq:/var/lib/rabbitmq
@@ -51,7 +51,7 @@ services:
           memory: 1G
   search:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: search
     networks:
       - alma_network
@@ -65,7 +65,7 @@ services:
   # Frontend
   frontend:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: frontend
     image: localhost/alma-frontend-prod:1
     networks:
@@ -86,7 +86,7 @@ services:
   # UI Application
   web-ui:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: app
     command: ["uwsgi /opt/invenio/var/instance/uwsgi_ui.ini"]
     image: localhost/alma-prod:1
@@ -107,7 +107,7 @@ services:
   # API Rest Application
   web-api:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: app
     command: ["uwsgi /opt/invenio/var/instance/uwsgi_rest.ini"]
     image: localhost/alma-prod:1
@@ -127,7 +127,7 @@ services:
   # Worker
   worker:
     extends:
-      file: docker-services.yml
+      file: podman-services.prod.yml.yml
       service: app
     command: ["celery -A invenio_app.celery worker --beat --loglevel=INFO"]
     image: localhost/alma-prod:1
