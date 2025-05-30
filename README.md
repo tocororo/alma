@@ -1,6 +1,8 @@
-# Alma
+# Alma: 
 
-Welcome to your InvenioRDM instance.
+Repositorio Institucional de la Universidad de Pinar del Río 
+
+Alma is a InvenioRDM instance.
 
 ## Getting started
 
