@@ -11,7 +11,19 @@
 FROM registry.cern.ch/inveniosoftware/almalinux:1
 
 COPY site ./site
-COPY Pipfile Pipfile.lock ./
+
+# Copy rebuild script
+COPY rebuild_lock.sh .
+
+# Copy Pipfile
+COPY Pipfile .
+
+# Rebuild lock file
+RUN chmod +x rebuild_lock.sh && \
+    ./rebuild_lock.sh && \
+    rm rebuild_lock.sh
+
+
 RUN pipenv install --deploy --system
 
 COPY ./docker/uwsgi/ ${INVENIO_INSTANCE_PATH}
