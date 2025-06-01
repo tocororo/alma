@@ -10,18 +10,22 @@
 
 FROM registry.cern.ch/inveniosoftware/almalinux:1
 
+RUN yum install -y python3-devel gcc && \
+    yum clean all
+
+
 COPY site ./site
 
 # Copy rebuild script
 COPY rebuild_lock.sh .
 
 # Copy Pipfile
-COPY Pipfile .
+COPY Pipfile Pipfile.lock ./
 
 # Rebuild lock file
-RUN chmod +x rebuild_lock.sh && \
-    ./rebuild_lock.sh && \
-    rm rebuild_lock.sh
+# RUN chmod +x rebuild_lock.sh && \
+#     ./rebuild_lock.sh && \
+#     rm rebuild_lock.sh
 
 
 RUN pipenv install --deploy --system
