@@ -23,7 +23,8 @@ services:
       - "INVENIO_RATELIMIT_STORAGE_URL=redis://cache:6379/3"
 
   frontend:
-    build: ./docker/nginx/
+    build: 
+      context: ./docker/nginx/
     image: localhost/alma-frontend-prod:1
     restart: "unless-stopped"
     ports:
