@@ -10,8 +10,8 @@
 
 FROM registry.cern.ch/inveniosoftware/almalinux:1
 
-RUN yum install -y python3-devel gcc && \
-    yum clean all
+RUN dnf install -y python3-devel gcc && \
+    dnf clean all
 
 
 COPY site ./site
