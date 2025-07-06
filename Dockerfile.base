@@ -1,0 +1,60 @@
+FROM quay.io/lib/python:3.12-slim-bookworm
+
+# Set locale
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    locales && \
+    sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    libcairo2-dev \
+    libffi-dev \
+    libpq-dev \
+    libxml2-dev \
+    libxslt-dev \
+    libxmlsec1-dev \
+    imagemagick \
+    libssl-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libsqlite3-dev \
+    fonts-dejavu \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js v22
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y nodejs
+
+# Upgrade pip and install packages
+RUN python -m pip install --upgrade pip pipenv wheel
+
+# Create working directory
+ENV WORKING_DIR=/opt/invenio
+ENV INVENIO_INSTANCE_PATH=${WORKING_DIR}/var/instance
+
+# Create files mountpoints
+RUN mkdir -p ${INVENIO_INSTANCE_PATH} && \
+    mkdir ${INVENIO_INSTANCE_PATH}/data ${INVENIO_INSTANCE_PATH}/archive ${INVENIO_INSTANCE_PATH}/static
+
+# Copy everything inside /src
+RUN mkdir -p ${WORKING_DIR}/src
+WORKDIR ${WORKING_DIR}/src
+
+# Set folder permissions
+ENV INVENIO_USER_ID=1000
+RUN chgrp -R 0 ${WORKING_DIR} && \
+    chmod -R g=u ${WORKING_DIR} && \
+    useradd invenio --uid ${INVENIO_USER_ID} --gid 0 && \
+    chown -R invenio:root ${WORKING_DIR}
+
+RUN python3 --version

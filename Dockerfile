@@ -1,33 +1,11 @@
-# Dockerfile that builds a fully functional image of your app.
-#
-# This image installs all Python dependencies for your application. It's based
-# on Almalinux (https://github.com/inveniosoftware/docker-invenio)
-# and includes Pip, Pipenv, Node.js, NPM and some few standard libraries
-# Invenio usually needs.
-#
-# Note: It is important to keep the commands in this file in sync with your
-# bootstrap script located in ./scripts/bootstrap.
+FROM localhost/almaupr:1
 
-FROM registry.cern.ch/inveniosoftware/almalinux:1
-
-RUN dnf install -y python3-devel gcc && \
-    dnf clean all
-
-
+# Copy site folder and install its dependencies
 COPY site ./site
+# RUN if [ -f "./site/setup.py" ]; then pip install -e ./site; fi
 
-# Copy rebuild script
-COPY rebuild_lock.sh .
-
-# Copy Pipfile
-COPY Pipfile Pipfile.lock ./
-
-# Rebuild lock file
-# RUN chmod +x rebuild_lock.sh && \
-#     ./rebuild_lock.sh && \
-#     rm rebuild_lock.sh
-
-
+COPY Pipfile ./
+RUN pipenv lock 
 RUN pipenv install --deploy --system
 
 COPY ./docker/uwsgi/ ${INVENIO_INSTANCE_PATH}
@@ -35,11 +13,16 @@ COPY ./invenio.cfg ${INVENIO_INSTANCE_PATH}
 COPY ./templates/ ${INVENIO_INSTANCE_PATH}/templates/
 COPY ./app_data/ ${INVENIO_INSTANCE_PATH}/app_data/
 COPY ./translations/ ${INVENIO_INSTANCE_PATH}/translations/
-COPY ./ .
+
+RUN rm -R ${INVENIO_INSTANCE_PATH}/static/
 
 RUN cp -r ./static/. ${INVENIO_INSTANCE_PATH}/static/ && \
     cp -r ./assets/. ${INVENIO_INSTANCE_PATH}/assets/ && \
     invenio collect --verbose  && \
     invenio webpack buildall
+
+# COPY ./invenio-cli /opt/invenio-cli
+# RUN ls /opt/invenio-cli
+# RUN pip install /opt/invenio-cli
 
 ENTRYPOINT [ "bash", "-c"]

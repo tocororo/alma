@@ -38,14 +38,24 @@ code:developmentStatus:
 subjects:
   pid-type: sub
   schemes:
-    # - id: FOS
-    #   name: Fields of Science and Technology
-    #   uri: "http://www.oecd.org/science/inno/38235147.pdf"
-    #   data-file: vocabularies/subjects_oecd_fos.yaml
+    - id: FOS
+      name: Fields of Science and Technology
+      uri: "http://www.oecd.org/science/inno/38235147.pdf"
+      data-file: vocabularies/subjects_oecd_fos.yaml
     - id: UNESCO
       name: Unesco Subjects
       uri: "http://vocabularies.unesco.org/thesaurus/"
       data-file: vocabularies/unesco.yaml
+    - id: MeSH
+      data-file: vocabularies/subjects_mesh.csv
+      name: Medical Subject Headings
+      uri: "https://www.nlm.nih.gov/mesh/meshhome.html"
+
+
+upr:facultades:
+  pid-type: uprf
+  data-file: vocabularies/upr_facultades.yaml
+
 # Minimal example vocabularies
 # can be used for quick testing, or a basis for building your own customized vocabularies.
 # names:

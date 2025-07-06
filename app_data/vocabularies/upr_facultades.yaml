@@ -1,0 +1,29 @@
+- id: "fcyt"
+  title:
+    en: "Facultad de Ciencias Técnicas"
+    es: "Facultad de Ciencias Técnicas"
+- id: "fhum"
+  title:
+    en: "Facultad de Humanidades"
+    es: "Facultad de Humanidades"
+- id: "fmedia"
+  title:
+    en: "Facultad de Enseñanza Media"
+    es: "Facultad de Enseñanza Media"
+- id: "fprimaria"
+  title:
+    en: "Facultad de Educación General"
+    es: "Facultad de Educación General"
+- id: "fdeport"
+  title:
+    en: "Facultad de Deportes"
+    es: "Facultad de Deportes"
+- id: "fforestal"
+  title:
+    en: "Facultad de Ciencias Forestales"
+    es: "Facultad de Ciencias Forestales"
+- id: "fagronomia"
+  title:
+    en: "Facultad de Agronomía"
+    es: "Facultad de Agronomía"
+  

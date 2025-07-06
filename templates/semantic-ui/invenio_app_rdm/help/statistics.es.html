@@ -1,0 +1,194 @@
+{#
+  Copyright (C) 2021-2023 CERN.
+  Copyright (C) 2021 Northwestern University.
+
+  Invenio App RDM es software libre; puedes redistribuirlo y/o modificarlo
+  bajo los términos de la licencia MIT; ver el archivo LICENSE para más detalles.
+#}
+{%- set title = _("Preguntas frecuentes sobre estadísticas") %}
+{%- extends config.BASE_TEMPLATE %}
+
+{%- block page_body %}
+  <div class="ui two column grid container rel-mt-2">
+    <div class="ui row">
+      <div class="ui sixteen wide column">
+        <h2 id="statistics">Estadísticas</h2>
+        <p></p>
+      </div>
+      <div class="ui eight wide column">
+        <h3>
+          <p>¿Qué datos se rastrean?</p>
+        </h3>
+        <p>Rastreamos dos tipos de eventos:</p>
+        <ol>
+          <li>Visitas a una página de registro.</li>
+          <li>Descargas de un archivo.</li>
+        </ol>
+        <p>Para ambos tipos de eventos, recopilamos:</p>
+        <ol>
+          <li>
+            <strong>Visitante:</strong>
+            Un ID de visitante anonimizado.
+          </li>
+          <li>
+            <strong>Tipo de visitante:</strong>
+            Si la solicitud fue hecha por a) humano, b) máquina o c) robot.
+          </li>
+          <li>
+            <strong>País:</strong>
+            El país de origen de la solicitud (basado en la dirección IP).
+          </li>
+          <li>
+            <strong>Referente:</strong>
+            El dominio de referencia.
+          </li>
+        </ol>
+        <h3>
+          <p>
+            ¿Qué se considera una
+            <em>vista</em>
+            ?
+          </p>
+        </h3>
+        <p>Un usuario (humano o máquina) que visita un registro, excluyendo dobles clics y robots.</p>
+        <h3>
+          <p>
+            ¿Qué es una
+            <em>vista única</em>
+            ?
+          </p>
+        </h3>
+        <p>
+          Una
+          <em>vista única</em>
+          se define como una o más visitas de un usuario dentro de un período de 1 hora. Esto significa que si el mismo registro fue
+          accedido múltiples veces por el mismo usuario dentro del mismo período, lo consideramos como una única vista.
+        </p>
+        <h3>
+          <p>
+            ¿Qué se considera una
+            <em>descarga</em>
+            ?
+          </p>
+        </h3>
+        <p>Un usuario (humano o máquina) que descarga un archivo de un registro, excluyendo dobles clics y robots. Si un registro tiene
+          múltiples archivos y descargas todos, cada archivo cuenta como una descarga.</p>
+        <h3>
+          <p>
+            ¿Qué es una
+            <em>descarga única</em>
+            ?
+          </p>
+        </h3>
+        <p>
+          Una
+          <em>descarga única</em>
+          se define como una o más descargas de archivos de un mismo registro por un usuario dentro de un período de 1 hora. Esto
+          significa que si uno o más archivos del mismo registro fueron descargados múltiples veces por el mismo usuario dentro del mismo
+          período, lo consideramos como una única descarga.
+        </p>
+        <h3>
+          <p>
+            ¿Qué es el
+            <em>volumen de datos descargados</em>
+            ?
+          </p>
+        </h3>
+        <p>El volumen total de datos que ha sido descargado para todos los archivos de un registro por un usuario (humano o máquina), excluyendo
+          dobles clics y robots. En caso de que un usuario cancele una descarga a mitad, igualmente contamos el tamaño total del archivo como
+          completamente descargado.</p><h3>
+          <p>¿Cómo se manejan las versiones?</p>
+        </h3>
+        <p>Por defecto, para un registro, mostramos los conteos agregados de vistas, descargas y volumen de datos para todas las versiones
+          de un registro. Puedes expandir el cuadro de estadísticas en la página del registro para ver los conteos específicos de cada versión.</p>
+        <h3>
+          <p>¿Cómo se manejan los robots?</p>
+        </h3>
+        <p>
+          Las solicitudes hechas por robots (también llamados crawlers, arañas o bots) son filtradas de las estadísticas de uso. Detectamos robots
+          basados en una lista estandarizada proporcionada por los proyectos
+          <a href="https://www.projectcounter.org/">COUNTER</a>
+          y
+          <a href="https://makedatacount.org/">Making Data Count</a>.
+        </p>
+        <h3>
+          <p>¿Con qué frecuencia se actualizan las estadísticas de uso?</p>
+        </h3>
+        <p>Una vez al día.</p>
+        <h3>
+          <p>¿Cómo puedo ver los registros más vistos?</p>
+        </h3>
+        <p>
+          Cualquier búsqueda en {{ config.THEME_SITENAME }} te permite ordenar los resultados por "
+          <a href="https://zenodo.org/search?sort=mostviewed">más vistos</a>
+          ".
+        </p>
+        <h3>
+          <p>¿Cómo realizan el rastreo?</p>
+        </h3>
+        <p>
+          Cumplimos con el
+          <a href="https://www.projectcounter.org/">Código de Prácticas COUNTER</a>
+          así como con el
+          <a href="https://peerj.com/preprints/26505/">Código de Prácticas para Métricas de Uso de Datos de Investigación</a>
+          en nuestro rastreo. Esto significa que nuestras estadísticas de uso pueden compararse con otros repositorios compatibles con COUNTER.
+        </p>
+      </div>
+      <div class="ui eight wide column">
+        <h3>
+          <p>¿Cuál es la diferencia entre una máquina y un robot?</p>
+        </h3>
+        <p>
+          Una
+          <em>solicitud de máquina</em>
+          es una solicitud automatizada iniciada por un usuario humano, por ejemplo un script descargando datos de {{ config.THEME_SITENAME }} para ejecutar un
+          análisis. Una
+          <em>solicitud de robot</em>
+          es una solicitud automatizada hecha por ejemplo por un rastreador de motor de búsqueda.
+        </p>
+        <h3>
+          <p>¿Cómo anonimizan a los usuarios?</p>
+        </h3>
+        <p>Para cada evento de vista/descarga, rastreamos un ID de visitante anonimizado. Este ID cambia cada 24 horas para un mismo usuario,
+          por lo que un usuario viendo el mismo registro en dos días diferentes tendrá dos IDs diferentes. La razón por la que rastreamos este ID
+          anonimizado es para poder contar vistas y descargas únicas.</p>
+        <p>
+          Para propósitos de seguridad, también mantenemos un registro de acceso del servidor web que incluye tu
+          <a href="https://es.wikipedia.org/wiki/Dirección_IP">dirección IP</a>
+          y la cadena de
+          <a href="https://es.wikipedia.org/wiki/Agente_de_usuario">agente de usuario</a>
+          de tu navegador. Este registro se elimina automáticamente después de máximo 1 año y está estrictamente separado
+          de la recolección de estadísticas de uso.
+        </p>
+        <p>El ID de visitante anonimizado se genera a partir de un identificador personal como:</p>
+        <ol>
+          <li>un ID de usuario (si estás conectado en zenodo.org),</li>
+          <li>un ID de sesión,</li>
+          <li>o una dirección IP y la cadena de agente de usuario de tu navegador.</li>
+        </ol>
+        <p>
+          Combinamos el identificador personal con un valor aleatorio (una sal) y aplicamos una
+          <a href="https://es.wikipedia.org/wiki/Función_hash_criptográfica">función hash criptográfica</a>
+          unidireccional para codificar los datos. La sal (valor aleatorio) se descarta y se regenera cada 24 horas. Al usar y
+          luego descartar esta sal aleatoria, nos aseguramos de que el ID de visitante anonimizado sea completamente aleatorio.
+        </p>
+        <h3>
+          <p>¿Puedo excluirme del rastreo de estadísticas?</p>
+        </h3>
+        <p>No, no es posible excluirse. El rastreo de estadísticas está completamente anonimizado y se realiza del lado del servidor.</p>
+        <h3>
+          <p>¿Hay estadísticas de uso para comunidades?</p>
+        </h3>
+        <p>Aún no, pero agregaremos estadísticas de uso agregadas para tus comunidades.</p>
+        <h3>
+          <p>¿Rastrean mis consultas de búsqueda?</p>
+        </h3>
+        <p>No.</p>
+        <h3>
+          <p>¿Realizan algún perfilado manual o automático de usuarios?</p>
+        </h3>
+        <p>No.</p>
+      </div>
+    </div>
+  </div>
+{% endblock page_body %}

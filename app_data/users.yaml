@@ -1,12 +1,17 @@
 #list of users:
-- email: rafael.martinez@upr.edu.cu
+- email: malayibiri@gmail.com
   username: malayibiri
   full_name: Rafael Martinez Estevez
   affiliations: Universidad de Pinar del Rio
   active: true
   confirmed: true
   password: Rme.2024
-  roles:
-    - admin
   allow:
     - superuser-access
+- email: test@gmail.com
+  username: test
+  full_name: TEst TEst
+  affiliations: Universidad de Pinar del Rio
+  active: true
+  confirmed: true
+  password: Rme.2024

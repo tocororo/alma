@@ -8,6 +8,14 @@ networks:
     labels:
       - description="Isolated network for Alma services"
 
+environment:
+  POSTGRES_PASSWORD:${POSTGRES_PASSWORD}
+  PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+  RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+  RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+  INVENIO_SECRET_KEY=${INVENIO_SECRET_KEY}
+  INVENIO_CLI_PATH=${INVENIO_CLI_PATH}
+
 services:
 
   cache:
@@ -17,12 +25,13 @@ services:
     networks:
       - alma_network
     volumes:
-      - /alma/data/redis:/data  # Bind mount for critical data
+      - redis_data:/data  # Bind mount for critical data
     deploy:
       resources:
         limits:
           cpus: '0.5'
           memory: 512M
+    restart: always
   db:
     extends:
       file: podman-services.prod.yml
@@ -30,25 +39,27 @@ services:
     networks:
       - alma_network
     volumes:
-      - /alma/data/postgres:/var/lib/postgresql/data  # Bind mount for critical data
+      - pg_data:/var/lib/postgresql/data  # Bind mount for critical data
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: 2G
+          cpus: '0.5'
+          memory: 1G
+    restart: always
   mq:
     extends:
       file: podman-services.prod.yml
       service: mq
     volumes:
-      - /srv/alma/rabbitmq:/var/lib/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - alma_network
     deploy:
       resources:
         limits:
-          cpus: '0.75'
+          cpus: '1'
           memory: 1G
+    restart: always
   search:
     extends:
       file: podman-services.prod.yml
@@ -56,12 +67,13 @@ services:
     networks:
       - alma_network
     volumes:
-      - /alma/data/opensearch:/usr/share/opensearch/data  # Bind mount for critical data
+      - os_data:/usr/share/opensearch/data  # Bind mount for critical data
     deploy:
       resources:
         limits:
           cpus: '2'
           memory: 4G
+    restart: always
   # Frontend
   frontend:
     extends:
@@ -71,7 +83,7 @@ services:
     networks:
       - alma_network
     volumes:
-      - /alma/data/static:/opt/invenio/var/instance/static
+      - static_data:/opt/invenio/var/instance/static
     depends_on:
       - web-ui
       - web-api
@@ -83,26 +95,28 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+    restart: always
   # UI Application
   web-ui:
     extends:
       file: podman-services.prod.yml
       service: app
     command: ["uwsgi /opt/invenio/var/instance/uwsgi_ui.ini"]
-    image: localhost/alma-prod:1
+    image: localhost/alma-app-prod:1
     networks:
       - alma_network
     ports:
       - "5000"
     volumes:
-      - /alma/data/static:/opt/invenio/var/instance/static
-      - /alma/data/uploaded:/opt/invenio/var/instance/data
-      - /alma/data/archived:/opt/invenio/var/instance/archive
+      - static_data:/opt/invenio/var/instance/static
+      - uploaded_data:/opt/invenio/var/instance/data
+      - archived_data:/opt/invenio/var/instance/archive
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: '0.5'
           memory: 1G
+    restart: always
 
   # API Rest Application
   web-api:
@@ -110,19 +124,20 @@ services:
       file: podman-services.prod.yml
       service: app
     command: ["uwsgi /opt/invenio/var/instance/uwsgi_rest.ini"]
-    image: localhost/alma-prod:1
+    image: localhost/alma-app-prod:1
     networks:
       - alma_network
     ports:
       - "5000"
     volumes:
-      - /alma/data/uploaded:/opt/invenio/var/instance/data
-      - /alma/data/archived:/opt/invenio/var/instance/archive
+      - uploaded_data:/opt/invenio/var/instance/data
+      - archived_data:/opt/invenio/var/instance/archive
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: '0.5'
           memory: 1G
+    restart: always
 
   # Worker
   worker:
@@ -130,11 +145,11 @@ services:
       file: podman-services.prod.yml
       service: app
     command: ["celery -A invenio_app.celery worker --beat --loglevel=INFO"]
-    image: localhost/alma-prod:1
+    image: localhost/alma-app-prod:1
     networks:
       - alma_network
     volumes:
-      - /alma/data/uploaded:/opt/invenio/var/instance/data
+      - uploaded_data:/opt/invenio/var/instance/data
     depends_on:
       search:
         condition: service_started
@@ -147,8 +162,9 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: '0.5'
           memory: 1G
+    restart: always
 
 
 volumes:
@@ -188,7 +204,6 @@ volumes:
     labels:
       - backup=true
       - service=redis
-
   pg_data:
     driver: local
     driver_opts:
@@ -198,17 +213,15 @@ volumes:
     labels:
       - backup=true
       - service=postgres
-
   rabbitmq_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /srv/alma/rabbitmq
+      device: /alma/data/rabbitmq
     labels:
       - backup=true
       - service=rabbitmq
-
   os_data:
     driver: local
     driver_opts:

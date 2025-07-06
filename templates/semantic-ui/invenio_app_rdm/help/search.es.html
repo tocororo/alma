@@ -1,0 +1,261 @@
+{#
+  Copyright (C) 2021 CERN.
+  Copyright (C) 2021 Northwestern University.
+
+  Invenio App RDM es software libre; puedes redistribuirlo y/o modificarlo
+  bajo los términos de la licencia MIT; ver el archivo LICENSE para más detalles.
+#}
+{%- set title = _("Guía de búsqueda") %}
+{%- extends config.BASE_TEMPLATE %}
+
+{%- block page_body %}
+<div class="ui container mt-25">
+  <h1>Guía de búsqueda</h1>
+  <p>
+    Esta guía explica cómo escribir consultas de búsqueda avanzadas utilizando ejemplos
+    fáciles de entender.
+  </p>
+  <h3>Búsqueda simple (uno o múltiples términos)</h3>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=open%20science"
+      ><code>open science</code></a
+    >
+  </p>
+  <p>
+    Los resultados coincidirán con registros que contengan los <em>términos</em> <code>open</code>
+    <em>o</em> <code>science</code> en <em>cualquier campo</em>. Ten en cuenta que se aplica
+    stemming, por lo que <code>science</code> también coincidirá con <code>sciences</code>.
+    Los resultados se clasifican según un algoritmo que considera tus términos de búsqueda.
+  </p>
+  <p>
+    Puedes requerir la <em>presencia</em> de ambos términos usando los operadores
+    <code>+</code> o <code>AND</code>:
+  </p>
+  <p>
+    <strong>Ejemplos:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=%2Bopen%20%2Bscience"
+      ><code>+open +science</code></a
+    >
+    o
+    <a href="/search?page=1&amp;size=20&amp;q=open%20AND%20science"
+      ><code>open AND science</code></a
+    >
+  </p>
+  <p>
+    Puedes requerir la <em>ausencia</em> de uno o más términos usando los operadores
+    <code>-</code> o <code>NOT</code>:
+  </p>
+  <p>
+    <strong>Ejemplos:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=-open%20%2Bscience"
+      ><code>-open +science</code></a
+    >
+    o
+    <a href="/search?page=1&amp;size=20&amp;q=NOT%20open%20AND%20science"
+      ><code>NOT open AND science</code></a
+    >
+  </p>
+  <h3>Búsqueda por frase</h3>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=%22open%20science%22"
+      ><code>"open science"</code></a
+    >
+  </p>
+  <p>
+    Los resultados coincidirán con registros que contengan la <em>frase</em>
+    <code>open science</code> en <em>cualquier campo</em>.
+  </p>
+  <h3>Búsqueda por campo</h3>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=metadata.title:open"
+      ><code>metadata.title:open</code></a
+    >
+  </p>
+  <p>
+    Los resultados coincidirán con registros que contengan el <em>término</em> <code>open</code> en el
+    <em>campo</em> <code>metadata.title</code>. Si deseas buscar múltiples términos
+    en el título, debes <strong>agrupar los términos</strong> usando paréntesis:
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=metadata.title:(open%20science%29"
+      ><code>metadata.title:(open science)</code></a
+    >
+  </p>
+  <p>
+    Consulta <a href="https://inveniordm.docs.cern.ch/reference/metadata/#metadata"
+      > la documentación de InvenioRDM </a
+    > para ver la lista completa de campos en los que puedes buscar.
+  </p>
+  <h3>Combinar búsqueda simple, por frase o por campo</h3>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a
+      href="/search?page=1&amp;size=20&amp;q=%2Bmetadata.title:%22open%20science%22%20-metadata.title:policy"
+      ><code>+metadata.title:"open science" -metadata.title:policy</code></a
+    >
+    o por ejemplo
+    <a href="/search?page=1&amp;size=20&amp;q=metadata.title:(-open%20%2Bscience%29"
+      ><code>metadata.title:(-open +science)</code></a
+    >
+  </p>
+  <p>
+    Puedes combinar búsquedas simples, por frase y por campo para construir consultas
+    de búsqueda avanzadas.
+  </p>
+  <h3>Búsqueda por rango</h3>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a
+      href="/search?page=1&amp;size=20&amp;q=metadata.publication_date:%5B2017%20TO%202018%5D"
+      ><code>metadata.publication_date:[2017 TO 2018]</code></a
+    >
+    (nota: debes escribir <code>TO</code> en mayúsculas).
+  </p>
+  <p>
+    Los resultados coincidirán con registros que tengan una fecha de publicación entre 2017-01-01 y
+    2018-01-01 (ambas fechas inclusive).
+  </p>
+  <p>Ten en cuenta que las fechas parciales se expanden a fechas completas, por ejemplo:</p>
+  <ul>
+    <li>2017 se expande a 2017-01-01</li>
+    <li>2017-06 se expande a 2017-06-01</li>
+  </ul>
+  <p>
+    Usa corchetes (<code>[]</code>) para rangos <em>inclusivos</em> y llaves (<code>{}</code>)
+    para rangos <em>exclusivos</em>, por ejemplo:
+  </p>
+  <ul>
+    <li>
+      <code>[2017 TO 2018}</code> es equivalente a
+      <code>[2017-01-01 TO 2017-12-31]</code> debido a la expansión de fechas y
+      el límite superior exclusivo.
+    </li>
+  </ul>
+  <p>Ejemplos de otros rangos:</p>
+  <ul>
+    <li>
+      <code>metadata.publication_date:{* TO 2017-01-01}</code>: Todos los días hasta 2017.
+    </li>
+    <li>
+      <code>metadata.publication_date:[2017-01-01 TO *]</code>: Todos los días desde 2017.
+    </li>
+  </ul>
+  <h3>Clasificación/Ordenamiento</h3>
+  <p>
+    Por defecto, todas las búsquedas se ordenan según un algoritmo interno
+    que puntúa cada coincidencia con tu consulta. Tanto en la interfaz de usuario
+    como en la API REST, es posible ordenar los resultados por:
+  </p>
+  <ul>
+    <li>Más reciente</li>
+    <li>Mejor coincidencia</li>
+    <li>Más antiguo</li>
+    <li>Más visto</li>
+    <li>Más descargado</li>
+  </ul>
+  <h3>Expresiones regulares</h3>
+  <p>
+    Las expresiones regulares son un lenguaje potente de coincidencia de patrones que permite
+    buscar patrones específicos en un campo. Por ejemplo, si quisiéramos encontrar
+    todos los registros con un prefijo DOI 10.5281 podríamos usar una búsqueda
+    con expresión regular:
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=metadata.subjects.identifier:%2F03yrm5c2%5B1%2C6%5D%2F"
+      ><code>metadata.subjects.identifier:/03yrm5c2[1,6]/</code></a
+    >
+  </p>
+  <p>
+    Cuidado, la expresión regular debe coincidir con <em>todo</em> el valor del campo.
+    Consulta la
+    <a
+      href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-regexp-query.html#regexp-syntax"
+      >sintaxis de expresiones regulares</a
+    >
+    para más detalles.
+  </p>
+  <h3>Valores faltantes</h3>
+  <p>
+    Es posible buscar registros que carezcan de un valor o que tengan
+    un valor en un campo específico usando los nombres de campo <code>_exists_</code> y
+    <code> not _exists_</code>.
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=_missing_:metadata.additional_titles"
+      ><code>not _exists_:metadata.additional_titles</code></a
+    >
+    (todos los registros sin metadata.additional_titles)
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=_exists_:metadata.creators"
+      ><code>_exists_:metadata.creators</code></a
+    >
+    (todos los registros con metadata.creators)
+  </p>
+  <h3>Conceptos avanzados</h3>
+  <h4>Potenciación (Boosting)</h4>
+  <p>
+    Puedes usar el operador de potenciación <code>^</code> cuando un término es más relevante
+    que otro. Por ejemplo, puedes buscar todos los registros con la frase
+    <em>open science</em> ya sea en el campo <em>título</em> o
+    <em>descripción</em>, pero clasificar más alto los registros con la frase en el
+    campo <em>título</em>:
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a
+      href="/search?page=1&amp;size=20&amp;q=metadata.title:%22open%20science%22%5E5%20metadata.description:%22open%20science%22"
+      ><code>metadata.title:"open science"^5 metadata.description:"open science"</code></a
+    >
+  </p>
+  <h4>Búsqueda difusa</h4>
+  <p>
+    Puedes buscar términos similares pero no exactamente iguales a tu término de búsqueda
+    usando el operador difuso <code>~</code>.
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=oepn~"><code>oepn~</code></a>
+  </p>
+  <p>
+    Los resultados coincidirán con registros que contengan términos similares a <code>oepn</code>, lo que
+    por ejemplo también coincidiría con <code>open</code>.
+  </p>
+  <h4>Búsquedas por proximidad</h4>
+  <p>
+    Una búsqueda por frase como <code>"open science"</code> por defecto espera todos los términos
+    en exactamente el mismo orden, y por lo tanto no coincidiría con un registro
+    que contenga la frase <em>"open access and science"</em>. Una búsqueda por proximidad
+    permite que los términos no estén en el orden exacto y puede incluir otros términos
+    entre ellos. El grado de flexibilidad se especifica con un número entero:
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=%22open%20science%22~5"
+      ><code>"open science"~5</code></a
+    >
+  </p>
+  <h4>Comodines</h4>
+  <p>
+    Puedes usar comodines en términos de búsqueda para reemplazar un solo carácter (usando
+    el operador <code>?</code>) o cero o más caracteres (usando el operador
+    <code>*</code>).
+  </p>
+  <p>
+    <strong>Ejemplo:</strong>
+    <a href="/search?page=1&amp;size=20&amp;q=ope%3F%20scien*"
+      ><code>ope? scien*</code></a
+    >
+  </p>
+  <p>
+    Las búsquedas con comodines pueden ser lentas y normalmente deberían evitarse si es posible.
+  </p>
+</div>
+{%- endblock page_body%}

@@ -6,7 +6,7 @@ services:
       context: ./
       args:
         - ENVIRONMENT=PROD
-    image: localhost/alma-prod:1
+    image: localhost/alma-app-prod:1
     restart: "unless-stopped"
     environment:
       - "INVENIO_ACCOUNTS_SESSION_REDIS_URL=redis://cache:6379/1"
@@ -80,12 +80,15 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
       - "DISABLE_INSTALL_DEMO_CONFIG=true"
-      - "plugins.security.disabled=false"
+      - "plugins.security.disabled=true"
       - "discovery.type=single-node"
     ulimits:
       memlock:
         soft: -1
         hard: -1
+    ports:
+      - "9200:9200"
+      - "9600:9600"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
       interval: 30s

@@ -1,0 +1,60 @@
+
+[main]
+host = https://www.transifex.com
+
+[o:inveniosoftware:p:invenio:r:invenio-administration-messages-ui]
+file_filter =translations/tmp/invenio_administration/<lang>/messages.po
+source_file =invenio_administration/assets/semantic-ui/translations/invenio_administration/translations.pot
+source_lang = en
+type = PO
+
+
+[main]
+host = https://www.transifex.com
+
+[o:inveniosoftware:p:invenio:r:invenio-app-rdm-messages-ui]
+file_filter =translations/tmp/invenio_app_rdm/<lang>/messages.po
+source_file =invenio_app_rdm/assets/semantic-ui/translations/invenio_app_rdm/translations.pot
+source_lang = en
+type = PO
+
+
+[main]
+host = https://www.transifex.com
+
+[o:inveniosoftware:p:invenio:r:invenio-communities-messages-ui]
+file_filter =translations/tmp/invenio_communities/<lang>/messages.po
+source_file =invenio_communities/assets/semantic-ui/translations/invenio_communities/translations.pot
+source_lang = en
+type = PO
+
+
+[main]
+host = https://www.transifex.com
+
+[o:inveniosoftware:p:invenio:r:invenio-rdm-records-messages-ui]
+file_filter =translations/tmp/invenio_rdm_records/<lang>/messages.po
+source_file =invenio_rdm_records/assets/semantic-ui/translations/invenio_rdm_records/translations.pot
+source_lang = en
+type = PO
+
+
+[main]
+host = https://www.transifex.com
+
+[o:inveniosoftware:p:invenio:r:invenio-requests-messages-ui]
+file_filter =translations/tmp/invenio_requests/<lang>/messages.po
+source_file =invenio_requests/assets/semantic-ui/translations/invenio_requests/translations.pot
+source_lang = en
+type = PO
+
+
+[main]
+host = https://www.transifex.com
+
+[o:inveniosoftware:p:invenio:r:invenio-search-ui-messages-js]
+file_filter =translations/tmp/invenio_search_ui/<lang>/messages.po
+source_file =invenio_search_ui/assets/semantic-ui/translations/invenio_search_ui/translations.pot
+source_lang = en
+type = PO
+
