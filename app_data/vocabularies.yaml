@@ -46,11 +46,6 @@ subjects:
       name: Unesco Subjects
       uri: "http://vocabularies.unesco.org/thesaurus/"
       data-file: vocabularies/unesco.yaml
-    - id: MeSH
-      data-file: vocabularies/subjects_mesh.csv
-      name: Medical Subject Headings
-      uri: "https://www.nlm.nih.gov/mesh/meshhome.html"
-
 
 upr:facultades:
   pid-type: uprf
