@@ -26,6 +26,8 @@ RUN  ls -alh ${INVENIO_INSTANCE_PATH}/assets/
 
 RUN invenio alma i18n-distribute-js-translations --input-directory ${INVENIO_INSTANCE_PATH}/translations/
 
+RUN  ls -alh ${INVENIO_INSTANCE_PATH}/assets/
+
 RUN invenio collect --verbose 
 
 RUN invenio webpack buildall
