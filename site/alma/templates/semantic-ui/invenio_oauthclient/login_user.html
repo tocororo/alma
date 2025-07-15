@@ -15,7 +15,6 @@
 
 {%- block form_outer %}
   {% if config.OAUTHCLIENT_REMOTE_APPS %}
-  <h1>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa</h1>
   <div class="ui form">
     {% for name, config in config.OAUTHCLIENT_REMOTE_APPS.items() if not config.hide %}
       {{ oauth_button(name, next=request.args.get('next')) }}

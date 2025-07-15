@@ -2372,6 +2372,13 @@ msgstr ""
 "El nombre de usuario debe comenzar con una letra, tener al menos tres "
 "caracteres y solo contener caracteres alfanuméricos, guiones y guiones bajos."
 
+msgid ""
+"Username must start with a letter, be at least three characters long and "
+"only contain alphanumeric characters, dot, dashes and underscores."
+msgstr ""
+"El nombre de usuario debe comenzar con una letra, tener al menos tres "
+"caracteres y solo contener caracteres alfanuméricos, punto, guiones y guiones bajos."
+
 msgid "%(icon)s Security"
 msgstr "%(icon)s Seguridad"
 

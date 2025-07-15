@@ -80,18 +80,31 @@ class DexOAuthSettingsHelper(OAuthSettingsHelper):
 # BASE_APP = upr.base_app
 # REMOTE_APP = upr.remote_app
 
+DEX_ID_AFF = {
+    'localhost-alma': 'Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"',
+    'upr-alma':  'Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"',
+}
 
 def dex_account_info(remote, resp):
     """Retrieve remote account information used to find local user."""
+    
     user_info = remote.get('userinfo').data
     
+    email=user_info.get('email')
+    username = email.split('@')[0]
+    aud = user_info.get('aud')
+    aff = DEX_ID_AFF[aud] if aud  in DEX_ID_AFF else ''
+
+    
+
     # Map Dex response to Invenio account info
     return dict(
         user=dict(
             email=user_info.get('email'),
             profile=dict(
-                username=user_info.get('preferred_username'),
+                username=username,
                 full_name=user_info.get('name'),
+                affiliations=aff,
             ),
         ),
         external_id=user_info.get('sub'),
