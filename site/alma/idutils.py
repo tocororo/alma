@@ -1,5 +1,6 @@
+import re 
 
-
+onei_regexp = re.compile(r"^https:\/\/onei\.gob\.cu\/[a-zA-Z]+\/\d+$")
 
 def get_onei_scheme_config():
     return {
@@ -8,12 +9,13 @@ def get_onei_scheme_config():
             # Used in `idutils.normalizers.normalize_pid` function.
             "normalizer": lambda value: normalized_value,
             # See examples in `idutils.detectors.IDUTILS_SCHEME_FILTER` config.
-            "filter": ["list_of_schemes_to_filter_out"],
+            "filter": [],
             # Used in `idutils.normalizers.to_url` function.
-            "url_generator": lambda scheme, normalized_pid: "normalized_url",
+            "url_generator": normalized_value,
         }
 
-def onei_validator(val):
-    pass
+def onei_validator(val):   
+    return onei_regexp.match(val)
+
 def normalized_value(val):
-    pass
+    return val
