@@ -1,5 +1,7 @@
 # run 
 
+
+
 ```bash
 
 invenio-cli install
@@ -7,8 +9,6 @@ invenio-cli install
 podman-compose -f podman-compose.dev.yml up -d
 
 invenio-cli services setup --no-demo-data  --no-services
-
-
 
 invenio vocabularies update --vocabulary names  --filepath ./app_data/vocabs.yaml
 
