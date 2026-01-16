@@ -1,4 +1,8 @@
-FROM localhost/almaupr:1
+FROM localhost/invenioupr:1
+
+# Create working directory
+ENV WORKING_DIR=/opt/invenio
+ENV INVENIO_INSTANCE_PATH=${WORKING_DIR}/var/instance
 
 # Copy site folder and install its dependencies
 COPY site ./site

@@ -5,7 +5,7 @@ version: '2.2'
 services:
 
   cache:
-    image: quay.io/lib/redis:7
+    image: docker.uclv.cu/redis:7
     restart: "unless-stopped"
     read_only: true
     ports:
@@ -19,7 +19,7 @@ services:
       - redis_data:/data
 
   db:
-    image: quay.io/lib/postgres:14.13
+    image: docker.uclv.cu/postgres:14.13
     restart: "unless-stopped"
     environment:
       - "POSTGRES_USER=alma"
@@ -36,7 +36,7 @@ services:
       retries: 3
 
   mq:
-    image: quay.io/lib/rabbitmq:3-management
+    image: docker.uclv.cu/rabbitmq:3-management
     restart: "unless-stopped"
     ports:
       - "15672:15672"  # Management UI

@@ -165,7 +165,19 @@ services:
     #       cpus: '0.5'
     #       memory: 1G
     restart: always
-
+  
+  # Jobs scheduler
+  scheduler:
+    extends:
+      file: podman-services.prod.yml
+      service: app
+    command: ["celery -A invenio_app.celery beat --scheduler invenio_jobs.services.scheduler:RunScheduler --loglevel=INFO"]
+    image: localhost/alma-app-prod:1
+    depends_on:
+      mq:
+        condition: service_started
+      db:
+        condition: service_started
 
 volumes:
   static_data:

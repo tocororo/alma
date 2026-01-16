@@ -26,4 +26,22 @@
   title:
     en: "Facultad de Agronomía"
     es: "Facultad de Agronomía"
-  
+- id: "externo"
+  title:
+    en: "Programas externos a la universidad"
+    es: "Programas externos a la universidad"
+- id: "CEF"
+  title:
+    es: "Centro de Estudios Forestales"
+- id: "CECEPRI"
+  title:
+    es: "Centro de Estudios de Ciencias de la Educación"
+- id: "CEEDAR"
+  title:
+    es: "Centro de Estudios del Entrenamiento Deportivo en el Alto Rendimiento"
+- id: "CE_GESTA"
+  title:
+    es: "Centro de Estudios de Dirección, Desarrollo Local, Turismo y Cooperativismo"
+- id: "CEMARNA"
+  title:
+    es: "Centro de Estudios de Medio Ambiente y Recurso Naturales"

@@ -929,7 +929,7 @@ msgid "open"
 msgstr "abrir"
 
 msgid "Open"
-msgstr "Abrir"
+msgstr "Abierto"
 
 msgid "unlock"
 msgstr "desbloquear"
@@ -2305,6 +2305,24 @@ msgstr "Facultad"
 msgid "Faculty to which the registry mainly belongs"
 msgstr "Facultad a la que principalmente pertenece el registro"
 
+msgid "Entity"
+msgstr "Entidad"
+
+msgid "Entity UPR"
+msgstr "Entidad UPR"
+
+msgid "Entity of UPR to which the registry mainly belongs"
+msgstr "Entidad de la UPR a la que principalmente pertenece el registro"
+
+msgid "Subjects"
+msgstr "Materias"
+
+msgid "Subjects UPR"
+msgstr "Materias UPR"
+
+msgid "Subjects defined by UPR"
+msgstr "Materias definidas por la UPR"
+
 msgid "Calle Martí 300 e/ González Alcorta y 27 de noviembre."
 msgstr "Calle Martí 300 e/ González Alcorta y 27 de noviembre."
 
@@ -2315,7 +2333,7 @@ msgid "Pinar del Rio, Cuba"
 msgstr "Pinar del Río, Cuba"
 
 msgid "Powered by"
-msgstr "Desarrollado por"
+msgstr "Desarrollado en"
 
 msgid "FAQ statistics"
 msgstr "Preguntas frecuentes sobre estadísticas"

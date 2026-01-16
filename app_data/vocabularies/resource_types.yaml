@@ -1014,6 +1014,23 @@
   title:
     en: Theses
     es: Tesis
+  props:
+    coar: text, thesis
+    csl: thesis
+    datacite_general: Text
+    datacite_type: Thesis
+    eurepo: info:eu-repo/semantics/thesis
+    notes: ''
+    openaire_resourceType: '0006'
+    openaire_type: thesis
+    schema.org: https://schema.org/Thesis
+    subtype: ""    
+    type: thesis
+    marc21_type: publication
+    marc21_subtype: thesis
+  tags:
+    - depositable
+    - linkable
 - id: thesis-bachelor_thesis
   icon: graduation cap
   props:

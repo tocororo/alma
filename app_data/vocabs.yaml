@@ -2,7 +2,7 @@ names:
   readers:
     - type: yaml
       args:
-        origin: "./app_data/vocabularies/names_upr.yaml"
+        origin: "./app_data/vocabularies/names_orcid.yaml"
   writers:
     - type: names-service
       args:

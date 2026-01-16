@@ -1,6 +1,8 @@
 
 # User info handling
+
 def account_info(remote, resp):
+    
     """Extract user information from Dex response."""
     return {
         'user': {

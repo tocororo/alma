@@ -47,9 +47,14 @@ subjects:
       uri: "http://vocabularies.unesco.org/thesaurus/"
       data-file: vocabularies/unesco.yaml
 
-upr:facultades:
-  pid-type: uprf
-  data-file: vocabularies/upr_facultades.yaml
+upr:entidades:
+  pid-type: upre
+  data-file: vocabularies/upr_entidades.yaml
+
+upr:materias:
+  pid-type: uprm
+  data-file: vocabularies/upr_materias.yaml
+
 
 # Minimal example vocabularies
 # can be used for quick testing, or a basis for building your own customized vocabularies.

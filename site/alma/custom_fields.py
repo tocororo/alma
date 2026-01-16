@@ -9,31 +9,50 @@ from invenio_i18n import lazy_gettext as _
 
 
 UPR_NAMESPACE = {
-    "upr": "https://codemeta.github.io/terms/#",
+    "upr": "https://www.upr.edu.cu/vocabs/",
 }
 
 UPR_CUSTOM_FIELDS = [
     VocabularyCF(  # the type of custom field, VocabularyCF is a controlled vocabulary
-        name="upr:facultades",  # name of the field, namespaced by `cern`
-        vocabulary_id="upr:facultades",  # controlled vocabulary id defined in the vocabularies.yaml file
+        name="upr:entidades",  # name of the field, namespaced by `cern`
+        vocabulary_id="upr:entidades",  # controlled vocabulary id defined in the vocabularies.yaml file
         dump_options=True,  # True when the list of all possible values will be visible in the dropdown UI component, typically for small vocabularies
         multiple=False, # if the field accepts a list of values (True) or single value (False)
     ),
+    VocabularyCF(  # the type of custom field, VocabularyCF is a controlled vocabulary
+        name="upr:materias",  # name of the field, namespaced by `cern`
+        vocabulary_id="upr:materias",  # controlled vocabulary id defined in the vocabularies.yaml file
+        dump_options=True,  # True when the list of all possible values will be visible in the dropdown UI component, typically for small vocabularies
+        multiple=True, # if the field accepts a list of values (True) or single value (False)
+    ),    
 ]
 
 UPR_CUSTOM_FIELDS_UI = {
         "section": _("Fields from UPR"),
         "fields": [
             dict(
-            field="upr:facultades",
+            field="upr:entidades",
             ui_widget="Dropdown",
             props=dict(
-                label=_("Faculty"),
-                placeholder=_("Faculty"),
+                label=_("Entity"),
+                placeholder=_("Entity UPR"),
                 icon="university",
-                description=_("Faculty to which the registry mainly belongs"),
+                description=_("Entity of UPR to which the registry mainly belongs"),
                 search=False,
                 multiple=False,
+                clearable=True,
+            ),
+        ),
+        dict(
+            field="upr:materias",
+            ui_widget="Dropdown",
+            props=dict(
+                label=_("Subjects"),
+                placeholder=_("Subjects UPR"),
+                icon="university",
+                description=_("Subjects defined by UPR"),
+                search=True,
+                multiple=True,
                 clearable=True,
             ),
         ),
@@ -41,14 +60,24 @@ UPR_CUSTOM_FIELDS_UI = {
 }
 
 UPR_CUSTOM_FACETS = {
-    "facultades": {
+    "upr:entidades": {
         "facet": CFTermsFacet(
-            field="upr:facultades.id",
-            label=_("Faculty"),
-            value_labels=VocabularyLabels("upr:facultades"),
+            field="upr:entidades.id",
+            label=_("Entidades UPR"),
+            value_labels=VocabularyLabels("upr:entidades"),
         ),
         "ui": {  # ui display
-            "field": CFTermsFacet.field("upr:facultades.id"),
+            "field": CFTermsFacet.field("upr:entidades.id"),
         },
     },
+    "upr:materias": {
+        "facet": CFTermsFacet(
+            field="upr:materias.id",
+            label=_("Materias UPR"),
+            value_labels=VocabularyLabels("upr:materias"),
+        ),
+        "ui": {  # ui display
+            "field": CFTermsFacet.field("upr:materias.id"),
+        },
+    },    
 }
