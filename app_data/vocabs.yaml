@@ -2,7 +2,7 @@ names:
   readers:
     - type: yaml
       args:
-        origin: "./app_data/vocabularies/names_orcid.yaml"
+        origin: "/opt/invenio/var/instance/app_data/vocabularies/names_orcid.yaml"
   writers:
     - type: names-service
       args:

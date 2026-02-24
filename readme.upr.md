@@ -64,3 +64,51 @@ podman-compose -f podman-services.prod.yml build --no-cache --build-arg HTTP_PRO
 podman-compose -f podman-compose.prod.yml up -d --force-recreate
 
 ```
+
+## 4- initial data 
+
+```bash
+# podman exec code_web-api_1 invenio db drop --yes-i-know
+# podman exec code_web-api_1 invenio index destroy --force --yes-i-know && \
+
+
+podman exec code_web-api_1 invenio db init create && \
+podman exec code_web-api_1 invenio files location create --default default-location file:///opt/invenio/var/instance/data && \
+podman exec code_web-api_1 invenio roles create admin && \
+podman exec code_web-api_1 invenio access allow superuser-access role admin && \
+podman exec code_web-api_1 invenio index init && \
+podman exec code_web-api_1 invenio rdm-records custom-fields init && \
+podman exec code_web-api_1 invenio communities custom-fields init && \
+podman exec code_web-api_1 invenio rdm fixtures && \
+podman exec code_web-api_1 invenio queues declare && \
+podman exec code_web-api_1 invenio rdm-records fixtures && \
+
+podman exec code_web-api_1 invenio users create admin@alma.upr.edu.cu --active --confirm --password /*Alma.Admin.2026*/ && \
+
+podman exec code_web-api_1 invenio roles add admin@alma.upr.edu.cu admin
+
+podman exec code_web-api_1 invenio rdm-records add-to-fixture creatorsroles && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture contributorsroles && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture resourcetypes && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture affiliations && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture descriptiontypes && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture datetypes && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture relationtypes && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture removalreasons && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture titletypes && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture communitytypes && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture code:developmentStatus && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture upr:entidades && \
+podman exec code_web-api_1 invenio rdm-records add-to-fixture upr:materias && \
+
+podman exec code_web-api_1 invenio rdm-records add-to-fixture subjects && \
+
+
+podman exec code_web-api_1 invenio vocabularies update --vocabulary names  --filepath /opt/invenio/var/instance/app_data/vocabs.yaml
+# output
+#  44104 items succeeded
+# 2015 contained errors
+
+
+
+```

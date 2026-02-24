@@ -108,6 +108,7 @@ services:
     ports:
       - "5000"
     volumes:
+      - /alma/code/invenio.cfg:/opt/invenio/var/instance/invenio.cfg:Z
       - static_data:/opt/invenio/var/instance/static
       - uploaded_data:/opt/invenio/var/instance/data
       - archived_data:/opt/invenio/var/instance/archive
@@ -130,6 +131,7 @@ services:
     ports:
       - "5000"
     volumes:
+      - /alma/code/invenio.cfg:/opt/invenio/var/instance/invenio.cfg:Z
       - uploaded_data:/opt/invenio/var/instance/data
       - archived_data:/opt/invenio/var/instance/archive
     # deploy:
@@ -149,7 +151,9 @@ services:
     networks:
       - alma_network
     volumes:
+      - /alma/code/invenio.cfg:/opt/invenio/var/instance/invenio.cfg:Z
       - uploaded_data:/opt/invenio/var/instance/data
+      - archived_data:/opt/invenio/var/instance/archive
     depends_on:
       search:
         condition: service_started
@@ -171,8 +175,14 @@ services:
     extends:
       file: podman-services.prod.yml
       service: app
-    command: ["celery -A invenio_app.celery beat --scheduler invenio_jobs.services.scheduler:RunScheduler --loglevel=INFO"]
+    command: ["celery", "-A", "invenio_app.celery", "beat", "--scheduler", "invenio_jobs.services.scheduler:RunScheduler", "--loglevel=INFO"]
     image: localhost/alma-app-prod:1
+    networks:
+      - alma_network
+    volumes:
+      - /alma/code/invenio.cfg:/opt/invenio/var/instance/invenio.cfg:Z
+      - uploaded_data:/opt/invenio/var/instance/data
+      - archived_data:/opt/invenio/var/instance/archive
     depends_on:
       mq:
         condition: service_started
@@ -182,59 +192,50 @@ services:
 volumes:
   static_data:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /alma/data/static
-    labels:
-      - backup=true
-      - service=frontend
   uploaded_data:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /alma/data/uploaded
-    labels:
-      - backup=true
-      - service=web-ui
   archived_data:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /alma/data/archived
-    labels:
-      - backup=true
-      - service=redis
+
   redis_data:
     driver: local
     driver_opts:
       type: none
-      o: bind
+      o: bind,rw,uid=999,gid=0  # UID 999 para usuario redis
       device: /alma/data/redis
     labels:
       - backup=true
-      - service=redis
+      - service=cache
+
   pg_data:
     driver: local
     driver_opts:
       type: none
-      o: bind
+      o: bind,rw,uid=999,gid=0  # UID 999 para usuario postgres
       device: /alma/data/postgres
     labels:
       - backup=true
-      - service=postgres
+      - service=db
+
   rabbitmq_data:
     driver: local
     driver_opts:
       type: none
-      o: bind
+      o: bind,rw,uid=999,gid=0  # UID 999 para usuario rabbitmq
       device: /alma/data/rabbitmq
     labels:
       - backup=true
-      - service=rabbitmq
+      - service=mq
+
   os_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind,rw,uid=1000,gid=0  # UID 1000 para usuario opensearch
+      device: /alma/data/opensearch
+    labels:
+      - backup=true
+      - service=search
     driver: local
     driver_opts:
       type: none
